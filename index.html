@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <title>Teste de nível | Mars Education</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* ====================================================
+                   IMPORTS E VARIÁVEIS
+                ==================================================== */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --mars-rubi: #c20000;
+            --mars-rubi-hover: #e00000;
+            --mars-bg: #000000;
+            --mars-card: #0a0a0a;
+            --mars-border: #1a1a1a;
+            --mars-border-light: #2a2a2a;
+            --mars-text: #ffffff;
+            --mars-muted: #888888;
+            --mars-muted-light: #aaaaaa;
+            --transition: 0.3s ease;
+            --scrollbar-width: 4px;
+        }
+
+        /* ====================================================
+                   SCROLLBAR PERSONALIZADA (VERMELHA FINA)
+                ==================================================== */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--mars-rubi) transparent;
+        }
+
+        @media (min-width: 769px) {
+            ::-webkit-scrollbar {
+                width: var(--scrollbar-width);
+                height: var(--scrollbar-width);
+            }
+
+            ::-webkit-scrollbar-track {
+                background: transparent;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background: var(--mars-rubi);
+                border-radius: 10px;
+                transition: var(--transition);
+            }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: var(--mars-rubi-hover);
+            }
+        }
+
+        @media (max-width: 768px) {
+            ::-webkit-scrollbar {
+                width: 0px;
+                height: 0px;
+                background: transparent;
+            }
+            
+            ::-webkit-scrollbar-thumb {
+                background: transparent;
+            }
+            
+            ::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            
+            * {
+                scrollbar-width: none;
+            }
+        }
+
+        body {
+            scrollbar-gutter: stable;
+        }
+
+        /* ====================================================
+                   RESET E BASE
+                ==================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--mars-bg);
+            color: var(--mars-text);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        /* ====================================================
+                   CONTAINER PRINCIPAL
+                ==================================================== */
+        .container {
+            width: 100%;
+            max-width: 650px;
+            background: var(--mars-card);
+            border: 1px solid var(--mars-border);
+            border-radius: 16px;
+            padding: 40px;
+            position: relative;
+            min-height: 500px;
+            transition: var(--transition);
+            margin: 0 auto;
+        }
+
+        /* ====================================================
+                   LOADER / TELA INICIAL
+                ==================================================== */
+        #loader-ui {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+        }
+
+        #loader-ui > * {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: mountElement 0.6s ease forwards;
+        }
+
+        #loader-ui .logo {
+            animation-delay: 0.1s;
+        }
+
+        #loader-ui .logo-sub {
+            animation-delay: 0.3s;
+        }
+
+        #loader-ui .loader-divider {
+            animation-delay: 0.5s;
+        }
+
+        #loader-ui .loader-description {
+            animation-delay: 0.7s;
+        }
+
+        #loader-ui .btn-instagram {
+            animation-delay: 0.9s;
+        }
+
+        #loader-ui .btn-start {
+            animation-delay: 1.1s;
+        }
+
+        @keyframes mountElement {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        #loader-ui .logo {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--mars-rubi);
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+        }
+
+        #loader-ui .logo-sub {
+            font-size: 1rem;
+            color: var(--mars-muted);
+            margin-bottom: 8px;
+            font-weight: 300;
+        }
+
+        #loader-ui .loader-divider {
+            width: 60px;
+            height: 2px;
+            background: var(--mars-rubi);
+            margin: 16px auto 24px;
+        }
+
+        #loader-ui .loader-description {
+            color: var(--mars-muted-light);
+            font-size: 0.95rem;
+            max-width: 420px;
+            line-height: 1.7;
+            margin-bottom: 32px;
+        }
+
+        .btn-instagram {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: transparent;
+            border: 1px solid var(--mars-border-light);
+            color: var(--mars-muted);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            font-weight: 300;
+            margin-bottom: 20px;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-instagram:hover {
+            border-color: var(--mars-rubi);
+            color: var(--mars-text);
+            background: rgba(194, 0, 0, 0.05);
+        }
+
+        .btn-instagram .insta-icon {
+            font-size: 0.85rem;
+            color: var(--mars-rubi);
+        }
+
+        .btn-start {
+            background: var(--mars-rubi);
+            color: white;
+            border: none;
+            padding: 16px 48px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-start:hover {
+            background: var(--mars-rubi-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(194, 0, 0, 0.25);
+        }
+
+        .btn-start:active {
+            transform: translateY(0);
+        }
+
+        /* ====================================================
+                   TELA DO TESTE (GAME UI)
+                ==================================================== */
+        #game-ui {
+            display: none;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .header .logo {
+            color: var(--mars-rubi);
+            font-weight: 600;
+            font-size: 1.4rem;
+            letter-spacing: -1px;
+            margin-bottom: 4px;
+        }
+
+        .header .subtitle {
+            color: var(--mars-muted);
+            font-size: 0.85rem;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 3px;
+            background: var(--mars-border);
+            margin-bottom: 32px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--mars-rubi);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 4px;
+        }
+
+        .question-box {
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .level-tag {
+            color: var(--mars-rubi);
+            font-size: 0.75rem;
+            margin-bottom: 8px;
+            display: block;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .level-tag i {
+            margin-right: 6px;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 22px;
+            font-weight: 400;
+            min-height: 60px;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-btn {
+            background: transparent;
+            border: 1px solid var(--mars-border);
+            color: var(--mars-text);
+            padding: 14px 20px;
+            border-radius: 10px;
+            text-align: left;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.95rem;
+            position: relative;
+            min-height: 52px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .option-btn:hover:not(.selected):not(:disabled) {
+            border-color: var(--mars-rubi);
+            background: rgba(194, 0, 0, 0.04);
+            transform: translateX(4px);
+        }
+
+        .option-btn.selected {
+            background: var(--mars-rubi);
+            border-color: var(--mars-rubi);
+            color: white;
+            box-shadow: 0 4px 16px rgba(194, 0, 0, 0.2);
+        }
+
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .option-btn .option-letter {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            font-weight: 600;
+            color: var(--mars-muted);
+            margin-right: 12px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            border: 1px solid var(--mars-border);
+            font-size: 0.8rem;
+        }
+
+        .option-btn.selected .option-letter {
+            color: white;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .option-btn .option-text {
+            flex: 1;
+        }
+
+        .footer-nav {
+            margin-top: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid var(--mars-border);
+            min-height: 50px;
+        }
+
+        .btn-nav {
+            background: transparent;
+            border: none;
+            color: var(--mars-muted);
+            cursor: pointer;
+            font-size: 0.85rem;
+            padding: 8px 12px;
+            transition: var(--transition);
+            text-transform: lowercase;
+            font-weight: 400;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-nav:hover:not(:disabled) {
+            color: var(--mars-text);
+        }
+
+        .btn-nav:disabled {
+            opacity: 0.2;
+            cursor: not-allowed;
+        }
+
+        .btn-nav i {
+            font-size: 0.75rem;
+        }
+
+        #counter {
+            font-size: 0.8rem;
+            color: var(--mars-muted);
+            font-weight: 300;
+        }
+
+        /* ====================================================
+                   TELA DE RESULTADO
+                ==================================================== */
+        #result-ui {
+            display: none;
+            text-align: center;
+            padding: 20px 0;
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        #result-ui .logo {
+            color: var(--mars-rubi);
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+        }
+
+        #result-ui .result-sub {
+            color: var(--mars-muted);
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+
+        .level-result {
+            font-size: 4.5rem;
+            font-weight: 700;
+            color: var(--mars-rubi);
+            margin: 8px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .desc-result {
+            color: var(--mars-muted-light);
+            line-height: 1.8;
+            margin-bottom: 32px;
+            font-size: 0.95rem;
+            max-width: 440px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .restart-btn {
+            background: var(--mars-rubi);
+            color: white;
+            border: none;
+            padding: 14px 38px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: auto;
+            min-width: 200px;
+        }
+
+        .restart-btn:hover {
+            background: var(--mars-rubi-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(194, 0, 0, 0.25);
+        }
+
+        .restart-btn i {
+            font-size: 1rem;
+        }
+
+        /* ====================================================
+                   ANIMAÇÕES
+                ==================================================== */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ====================================================
+                   RESPONSIVIDADE
+                ==================================================== */
+        @media (max-width: 768px) {
+            body {
+                padding: 12px;
+                align-items: flex-start;
+                padding-top: 40px;
+            }
+
+            .container {
+                padding: 20px 16px;
+                border-radius: 12px;
+                min-height: auto;
+            }
+
+            #loader-ui .logo {
+                font-size: 1.6rem;
+            }
+
+            #loader-ui .loader-description {
+                font-size: 0.88rem;
+                padding: 0 6px;
+            }
+
+            .btn-start {
+                padding: 14px 32px;
+                font-size: 0.95rem;
+                width: 100%;
+                max-width: 280px;
+            }
+
+            .btn-instagram {
+                font-size: 0.65rem;
+                padding: 5px 12px;
+                gap: 5px;
+            }
+
+            .btn-instagram .insta-icon {
+                font-size: 0.75rem;
+            }
+
+            .header .logo {
+                font-size: 1.1rem;
+            }
+
+            .question-text {
+                font-size: 1rem;
+                line-height: 1.6;
+                min-height: 50px;
+            }
+
+            .option-btn {
+                padding: 12px 16px;
+                font-size: 0.88rem;
+                border-radius: 8px;
+                min-height: 46px;
+            }
+
+            .option-btn .option-letter {
+                width: 24px;
+                height: 24px;
+                font-size: 0.7rem;
+                margin-right: 10px;
+            }
+
+            .footer-nav {
+                flex-wrap: wrap;
+                gap: 8px;
+                justify-content: center;
+                min-height: 60px;
+            }
+
+            .btn-nav {
+                font-size: 0.8rem;
+                padding: 6px 10px;
+            }
+
+            #counter {
+                font-size: 0.75rem;
+                order: -1;
+                width: 100%;
+                text-align: center;
+                margin-bottom: 4px;
+            }
+
+            .level-result {
+                font-size: 3.2rem;
+            }
+
+            .desc-result {
+                font-size: 0.88rem;
+                padding: 0 10px;
+            }
+
+            .restart-btn {
+                padding: 12px 28px;
+                font-size: 0.88rem;
+                width: 100%;
+                max-width: 240px;
+                min-width: unset;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .container {
+                padding: 48px 56px;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            }
+
+            #loader-ui .logo {
+                font-size: 2.6rem;
+            }
+
+            #loader-ui .loader-description {
+                font-size: 1rem;
+            }
+
+            .btn-start {
+                padding: 18px 56px;
+                font-size: 1.1rem;
+            }
+
+            .btn-instagram {
+                font-size: 0.7rem;
+                padding: 6px 16px;
+            }
+
+            .btn-instagram .insta-icon {
+                font-size: 0.8rem;
+            }
+
+            .question-text {
+                font-size: 1.15rem;
+            }
+
+            .option-btn {
+                padding: 16px 24px;
+                font-size: 1rem;
+                border-radius: 10px;
+                min-height: 56px;
+            }
+
+            .level-result {
+                font-size: 5.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- LOADER / TELA INICIAL -->
+        <div id="loader-ui">
+            <div class="logo">Teste seu Inglês</div>
+            <div class="logo-sub">Mars Education</div>
+            <div class="loader-divider"></div>
+            <p class="loader-description">
+                Teste seu nível de Inglês. Responda 25 perguntas e receba um diagnóstico do seu estágio atual no idioma. 95% de precisão.
+            </p>
+
+            <a href="https://instagram.com/dicarvalho.prof" target="_blank" class="btn-instagram" aria-label="Instagram do professor">
+                <i class="fa-brands fa-instagram insta-icon"></i> @dicarvalho.prof
+            </a>
+
+            <button class="btn-start" onclick="startTest()">
+                <i class="fa-solid fa-play" style="font-size: 0.9rem;"></i> Começar Teste
+            </button>
+        </div>
+
+        <!-- TELA DO TESTE -->
+        <div id="game-ui">
+            <div class="header">
+                <div class="logo">Teste de nivelamento</div>
+                <div class="subtitle">Descubra seu nível de inglês</div>
+            </div>
+
+            <div class="progress-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+
+            <div id="question-area">
+                <!-- Injetado via JavaScript -->
+            </div>
+
+            <div class="footer-nav">
+                <button id="prev-btn" class="btn-nav" onclick="prev()">
+                    <i class="fa-solid fa-chevron-left"></i> anterior
+                </button>
+                <span id="counter" class="subtitle">1 / 25</span>
+                <button id="next-btn" class="btn-nav" onclick="next()" disabled>
+                    próximo <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- TELA DE RESULTADO -->
+        <div id="result-ui">
+            <div class="logo">Seu resultado</div>
+            <div class="result-sub">Diagnóstico de nível</div>
+            <div id="level-badge" class="level-result">--</div>
+            <p id="level-desc" class="desc-result"></p>
+            <button class="restart-btn" onclick="resetTest()">
+                <i class="fa-solid fa-rotate-right"></i> Refazer Teste
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // ====================================================
+        // BANCO DE PERGUNTAS
+        // ====================================================
+        const questions = [
+            // A1 - Breakthrough
+            { q: "Hi, ___ name is Mark. What's yours?", options: ["my", "me", "I", "mine"], a: 0, lv: "A1" },
+            { q: "Where ___ you from?", options: ["is", "am", "are", "be"], a: 2, lv: "A1" },
+            { q: "She ___ to the gym every morning.", options: ["go", "goes", "going", "is go"], a: 1, lv: "A1" },
+            { q: "I don't have ___ money in my pocket.", options: ["some", "no", "any", "a"], a: 2, lv: "A1" },
+            { q: "Look at those ___ playing in the park.", options: ["childs", "children", "childrens", "child"], a: 1, lv: "A1" },
+
+            // A2 - Waystage
+            { q: "Yesterday, we ___ a very expensive car.", options: ["buy", "bought", "buys", "have bought"], a: 1, lv: "A2" },
+            { q: "I think English is ___ than French.", options: ["more easy", "easier", "easyer", "the easiest"], a: 1, lv: "A2" },
+            { q: "Have you ___ been to London?", options: ["never", "yet", "ever", "already"], a: 2, lv: "A2" },
+            { q: "We ___ dinner when the phone rang.", options: ["had", "are having", "were having", "have"], a: 2, lv: "A2" },
+            { q: "If it ___ tomorrow, I'll stay home.", options: ["rains", "will rain", "rain", "rained"], a: 0, lv: "A2" },
+
+            // B1 - Threshold
+            { q: "I've been living here ___ 2010.", options: ["for", "since", "during", "ago"], a: 1, lv: "B1" },
+            { q: "The bridge ___ built in the 19th century.", options: ["was", "is", "were", "has been"], a: 0, lv: "B1" },
+            { q: "I'm looking forward to ___ you again.", options: ["see", "seeing", "to see", "seen"], a: 1, lv: "B1" },
+            { q: "You ___ smoke here. It's strictly forbidden.", options: ["don't have to", "mustn't", "needn't", "shouldn't"], a: 1, lv: "B1" },
+            { q: "She asked me where ___.", options: ["did I live", "I lived", "do I live", "I live"], a: 1, lv: "B1" },
+
+            // B2 - Vantage
+            { q: "By the time you arrive, I ___ my homework.", options: ["finish", "will have finished", "will finish", "have finished"], a: 1, lv: "B2" },
+            { q: "I wish I ___ more for the exam last week.", options: ["study", "had studied", "studied", "would study"], a: 1, lv: "B2" },
+            { q: "Hardly ___ entered the room when the lights went out.", options: ["I had", "had I", "I", "did I"], a: 1, lv: "B2" },
+            { q: "It's no use ___ about things you can't change.", options: ["to cry", "crying", "cry", "to be crying"], a: 1, lv: "B2" },
+            { q: "Provided ___ you work hard, you will pass.", options: ["that", "to", "for", "with"], a: 0, lv: "B2" },
+
+            // C1 - Advanced
+            { q: "Were it not for your help, I ___ in deep trouble.", options: ["would be", "will be", "am", "had been"], a: 0, lv: "C1" },
+            { q: "Little ___ how much his life was about to change.", options: ["he knew", "did he know", "knew he", "he did know"], a: 1, lv: "C1" },
+            { q: "The company is on the ___ of bankruptcy.", options: ["edge", "verge", "border", "rim"], a: 1, lv: "C1" },
+            { q: "It is vital that he ___ informed of the decision.", options: ["is", "be", "was", "being"], a: 1, lv: "C1" },
+            { q: "___ had I reached the station than the train left.", options: ["No sooner", "Scarcely", "Hardly", "Barely"], a: 0, lv: "C1" }
+        ];
+
+        // ====================================================
+        // ESTADO DO TESTE
+        // ====================================================
+        let current = 0;
+        let answers = Array(questions.length).fill(null);
+        const letters = ['A', 'B', 'C', 'D'];
+        let isAnswering = false;
+        let isTransitioning = false;
+
+        // ====================================================
+        // FUNÇÃO: RESETAR TESTE
+        // ====================================================
+        function resetTest() {
+            // Reseta o estado
+            current = 0;
+            answers = Array(questions.length).fill(null);
+            isAnswering = false;
+            isTransitioning = false;
+            
+            // Esconde resultado e mostra loader
+            document.getElementById('result-ui').style.display = 'none';
+            document.getElementById('result-ui').style.animation = 'none';
+            document.getElementById('game-ui').style.display = 'none';
+            
+            const loader = document.getElementById('loader-ui');
+            loader.style.display = 'flex';
+            
+            // Reaplica a animação de montagem
+            const elements = loader.querySelectorAll('*');
+            elements.forEach(el => {
+                el.style.animation = 'none';
+                void el.offsetWidth;
+                el.style.animation = '';
+            });
+            
+            // Reseta a barra de progresso
+            document.getElementById('progress-bar').style.width = '0%';
+        }
+
+        // ====================================================
+        // FUNÇÃO: INICIAR TESTE (Loader → Game)
+        // ====================================================
+        function startTest() {
+            document.getElementById('loader-ui').style.display = 'none';
+            document.getElementById('game-ui').style.display = 'block';
+            render();
+        }
+
+        // ====================================================
+        // FUNÇÃO: RENDERIZAR PERGUNTA ATUAL
+        // ====================================================
+        function render() {
+            if (isTransitioning) return;
+            
+            const q = questions[current];
+            const area = document.getElementById('question-area');
+            const progress = ((current + 1) / questions.length) * 100;
+
+            document.getElementById('progress-bar').style.width = progress + '%';
+            document.getElementById('counter').innerText = `${current + 1} / ${questions.length}`;
+            document.getElementById('prev-btn').disabled = current === 0;
+
+            const nextBtn = document.getElementById('next-btn');
+            const isLast = current === questions.length - 1;
+            nextBtn.innerHTML = isLast ? 'finalizar <i class="fa-solid fa-check"></i>' : 'próximo <i class="fa-solid fa-chevron-right"></i>';
+            nextBtn.disabled = answers[current] === null;
+
+            // Mantém a altura estável para evitar saltos
+            const currentHeight = area.offsetHeight;
+            
+            // Aplica fade out suave
+            area.style.opacity = '0';
+            area.style.transform = 'translateY(5px)';
+            
+            setTimeout(() => {
+                // Atualiza o conteúdo
+                area.innerHTML = `
+                    <div class="question-box">
+                        <span class="level-tag"><i class="fa-solid fa-bullseye"></i> Nível Foco: ${q.lv}</span>
+                        <p class="question-text">${q.q}</p>
+                        <div class="options-list">
+                            ${q.options.map((opt, i) => `
+                                <button class="option-btn ${answers[current] === i ? 'selected' : ''}" 
+                                        onclick="selectOption(${i})"
+                                        ${answers[current] !== null ? 'disabled' : ''}>
+                                    <span class="option-letter">${letters[i]}</span>
+                                    <span class="option-text">${opt}</span>
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                
+                // Restaura a altura para evitar salto
+                if (currentHeight > 0) {
+                    area.style.minHeight = currentHeight + 'px';
+                }
+                
+                // Aplica fade in suave
+                area.style.opacity = '1';
+                area.style.transform = 'translateY(0)';
+                area.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+                
+                setTimeout(() => {
+                    area.style.minHeight = 'auto';
+                    area.style.transition = '';
+                }, 250);
+                
+            }, 200);
+        }
+
+        // ====================================================
+        // FUNÇÃO: SELECIONAR OPÇÃO
+        // ====================================================
+        function selectOption(index) {
+            if (isAnswering || answers[current] !== null) return;
+            
+            isAnswering = true;
+            
+            // Marca a resposta
+            answers[current] = index;
+            
+            // Atualiza visualmente as opções
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach((btn, i) => {
+                btn.disabled = true;
+                if (i === index) {
+                    btn.classList.add('selected');
+                }
+            });
+            
+            // Habilita o botão próximo
+            document.getElementById('next-btn').disabled = false;
+
+            // Avança automaticamente após seleção (apenas se não for a última pergunta)
+            if (current < questions.length - 1) {
+                setTimeout(() => {
+                    isAnswering = false;
+                    current++;
+                    render();
+                }, 400);
+            } else {
+                // Se for a última pergunta, aguarda o usuário clicar em "finalizar"
+                isAnswering = false;
+            }
+        }
+
+        // ====================================================
+        // FUNÇÃO: PRÓXIMA PERGUNTA
+        // ====================================================
+        function next() {
+            if (answers[current] === null || isAnswering) return;
+
+            if (current < questions.length - 1) {
+                isTransitioning = true;
+                current++;
+                render();
+                setTimeout(() => {
+                    isTransitioning = false;
+                }, 400);
+            } else {
+                finish();
+            }
+        }
+
+        // ====================================================
+        // FUNÇÃO: PERGUNTA ANTERIOR
+        // ====================================================
+        function prev() {
+            if (current > 0 && !isTransitioning) {
+                isTransitioning = true;
+                current--;
+                render();
+                setTimeout(() => {
+                    isTransitioning = false;
+                }, 400);
+            }
+        }
+
+        // ====================================================
+        // FUNÇÃO: FINALIZAR E CALCULAR RESULTADO
+        // ====================================================
+        function finish() {
+            // Verifica se todas as perguntas foram respondidas
+            const unanswered = answers.some((ans, i) => ans === null);
+            
+            if (unanswered) {
+                // Se houver perguntas não respondidas, avisa o usuário
+                if (confirm('Você ainda tem perguntas não respondidas. Deseja finalizar mesmo assim?')) {
+                    proceedToResult();
+                }
+            } else {
+                proceedToResult();
+            }
+        }
+
+        function proceedToResult() {
+            // Esconde o game e mostra o resultado
+            document.getElementById('game-ui').style.display = 'none';
+            const resultUI = document.getElementById('result-ui');
+            resultUI.style.display = 'block';
+            
+            // Força o reflow para garantir a animação
+            void resultUI.offsetWidth;
+            resultUI.style.animation = 'fadeIn 0.6s ease forwards';
+
+            // Contagem de acertos por nível (apenas das perguntas respondidas)
+            const levelScores = { A1: 0, A2: 0, B1: 0, B2: 0, C1: 0 };
+            const levelTotals = { A1: 0, A2: 0, B1: 0, B2: 0, C1: 0 };
+
+            questions.forEach((q, i) => {
+                levelTotals[q.lv]++;
+                if (answers[i] === q.a) {
+                    levelScores[q.lv]++;
+                }
+            });
+
+            // Lógica de nivelamento mais precisa
+            let finalLevel = "A1";
+            
+            // Calcula a porcentagem de acertos por nível
+            const levelPercentages = {};
+            for (const level in levelTotals) {
+                levelPercentages[level] = levelTotals[level] > 0 ? 
+                    (levelScores[level] / levelTotals[level]) * 100 : 0;
+            }
+
+            // Determina o nível mais forte
+            if (levelPercentages.C1 >= 50 && levelPercentages.B2 >= 60) {
+                finalLevel = "C1";
+            } else if (levelPercentages.B2 >= 50 && levelPercentages.B1 >= 60) {
+                finalLevel = "B2";
+            } else if (levelPercentages.B1 >= 50 && levelPercentages.A2 >= 60) {
+                finalLevel = "B1";
+            } else if (levelPercentages.A2 >= 50) {
+                finalLevel = "A2";
+            }
+
+            const descriptions = {
+                "A1": "Iniciando a jornada. Compreende expressões básicas e frases simples para necessidades imediatas.",
+                "A2": "Básico consolidado. Lida com tarefas rotineiras e troca informações simples sobre assuntos familiares.",
+                "B1": "Intermediário. Comunica-se na maioria das situações de viagem e descreve planos e experiências.",
+                "B2": "Intermediário superior. Compreende ideias complexas e interage com nativos com naturalidade.",
+                "C1": "Avançado. Utiliza o idioma de forma flexível para fins sociais, académicos e profissionais."
+            };
+
+            // Exibe o resultado
+            const badge = document.getElementById('level-badge');
+            const desc = document.getElementById('level-desc');
+
+            badge.innerText = finalLevel;
+            desc.innerText = descriptions[finalLevel];
+        }
+    </script>
+
+</body>
+</html>
